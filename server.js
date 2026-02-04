@@ -47,6 +47,4 @@ mongoose.connect(MONGO_URI)
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/rooms', require('./routes/rooms'));
 
-app.listen(5000, () => {
-    console.log('🚀 Server: http://localhost:5000');
-});
+module.exports = app;
