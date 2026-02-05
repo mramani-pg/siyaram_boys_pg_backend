@@ -17,6 +17,9 @@ app.get("/", (req, res) => {
   res.send("API Running...");
 });
 
-app.listen(5001, () => {
-    console.log('🚀 Server: http://localhost:5000');
-});
+// app.listen(5001, () => {
+//     console.log('🚀 Server: http://localhost:5000');
+// });
+
+module.exports = app;
+
