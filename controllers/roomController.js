@@ -1,54 +1,46 @@
+const express = require("express");
 const Room = require("../models/Room");
+const auth = require("../middleware/authMiddleware");
 
-// GET
-exports.getRooms = async (req, res) => {
+const router = express.Router();
+
+router.get("/", auth, async (req, res) => {
   try {
     const rooms = await Room.find().sort({ createdAt: -1 });
     res.json(rooms);
   } catch {
     res.status(500).json({ message: "Server error" });
   }
-};
+});
 
-// POST
-exports.createRoom = async (req, res) => {
+router.post("/", auth, async (req, res) => {
   try {
     const room = new Room(req.body);
     await room.save();
-    res.status(201).json(room);
-  } catch {
-    res.status(500).json({ message: "Server error" });
-  }
-};
-
-// UPDATE
-exports.updateRoom = async (req, res) => {
-  try {
-    const room = await Room.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true, runValidators: true }
-    );
-
-    if (!room)
-      return res.status(404).json({ message: "Room not found" });
-
     res.json(room);
   } catch {
     res.status(500).json({ message: "Server error" });
   }
-};
+});
 
-// DELETE
-exports.deleteRoom = async (req, res) => {
+router.put("/:id", auth, async (req, res) => {
   try {
-    const room = await Room.findByIdAndDelete(req.params.id);
+    const room = await Room.findByIdAndUpdate(req.params.id, req.body, {
+      new: true
+    });
+    res.json(room);
+  } catch {
+    res.status(500).json({ message: "Server error" });
+  }
+});
 
-    if (!room)
-      return res.status(404).json({ message: "Room not found" });
-
+router.delete("/:id", auth, async (req, res) => {
+  try {
+    await Room.findByIdAndDelete(req.params.id);
     res.json({ message: "Room deleted" });
   } catch {
     res.status(500).json({ message: "Server error" });
   }
-};
+});
+
+module.exports = router;
