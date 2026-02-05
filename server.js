@@ -21,6 +21,7 @@ app.use("/api/rooms", require("./routes/roomRoutes"));
 app.get("/", (req, res) => {
   res.send("API Running...");
 });
+console.log("JWT:", process.env.JWT_SECRET ? "LOADED" : "MISSING");
 
 // app.listen(5001, () => {
 //     console.log('🚀 Server: http://localhost:5000');
