@@ -33,7 +33,7 @@ app.options("*", cors());
 
 app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/rooms", require("./routes/roomRoutes"));
-app.use("/api/seed", require("./routes/seedRoutes"));
+// app.use("/api/seed", require("./routes/seedRoutes"));
 
 app.get("/", (req, res) => {
   res.send("API Running...");
