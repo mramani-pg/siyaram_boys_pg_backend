@@ -18,7 +18,8 @@ app.use(
     origin: [
       "http://localhost:5173",
       "http://localhost:3000",
-      "https://siyaram-boys-pg.vercel.app"
+      "https://siyaram-boys-pg.vercel.app",
+      "https://siyaram-boys-pg.vercel.app/admin"
     ],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
