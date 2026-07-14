@@ -9,7 +9,9 @@ router.get("/", async (req, res) => {
     });
 
     if (existing) {
-      return res.json({ message: "Admin already exists" });
+      return res.json({
+        message: "Admin already exists",
+      });
     }
 
     const admin = new User({
@@ -20,9 +22,14 @@ router.get("/", async (req, res) => {
 
     await admin.save();
 
-    res.json({ message: "Admin created successfully" });
+    res.json({
+      message: "Admin created successfully",
+    });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.error(err);
+    res.status(500).json({
+      message: err.message,
+    });
   }
 });
 
