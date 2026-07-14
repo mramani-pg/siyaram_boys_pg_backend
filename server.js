@@ -6,12 +6,9 @@ const connectDB = require("./config/db");
 
 const app = express();
 
-
 connectDB();
 
-
 app.use(express.json());
-
 
 const allowedOrigins = [
   "http://localhost:5173",
@@ -23,25 +20,24 @@ app.use(
   cors({
     origin: function (origin, callback) {
       if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
+        return callback(null, true);
       }
+      return callback(new Error("Not allowed by CORS"));
     },
-    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
+app.options("*", cors());
 
 app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/rooms", require("./routes/roomRoutes"));
-
 
 app.get("/", (req, res) => {
   res.send("API Running...");
 });
 
-// ENV Check
 console.log("JWT:", process.env.JWT_SECRET ? "LOADED" : "MISSING");
 
 module.exports = app;
